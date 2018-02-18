@@ -18,20 +18,6 @@ var isPanning;
 var shapeSize = 100;
 var nearestAmount = shapeSize / 4;
 
-function nearest(value, roundAmount) {
-	return Math.round(value / roundAmount) * roundAmount;
-}
-
-function updateCoords(event) {
-	$cursorCoords.text([
-		'(~',
-		nearest(event.offsetX, 1),
-		', ~',
-		nearest(event.offsetY, 1),
-		')'
-	].join(''));
-}
-
 function applyTransformations() {
 
 	// Create a layer for translatening the canvas
@@ -117,7 +103,6 @@ function addEventBindings() {
 		isMousedown = true;
 	});
 	$canvas.on('mousemove', function (event) {
-		updateCoords(event);
 		if (isMousedown) {
 			isPanning = true;
 			translateX = (event.offsetX - startX) / scale;
@@ -148,7 +133,6 @@ function addEventBindings() {
 				translateY: translateY
 			});
 			$canvas.drawLayers();
-			updateCoords(event);
 		}
 	});
 
