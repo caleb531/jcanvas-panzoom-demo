@@ -26,7 +26,9 @@ more than once).
 ## Your Mission
 
 **Your task is to fix this fourth case without breaking the other three cases.**
-See the *TODO* towards the end of `main.js` for details; I believe the correct solution will involve properly modifying `translateX` and `translateY`.
+**See the *TODO* towards the end of `main.js` for details; I believe that fixing
+**those lines will be part of the solution. Nevertheless, change whatever
+**necessary to get things working.
 
 ## Setup
 
