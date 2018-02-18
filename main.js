@@ -23,8 +23,7 @@ function applyTransformations() {
 	// Create a layer for translatening the canvas
 	$canvas.scaleCanvas({
 		layer: true,
-		name: 'scale',
-		scale: scale
+		name: 'scale'
 	});
 	$canvas.translateCanvas({
 		layer: true,
@@ -122,11 +121,15 @@ function addEventBindings() {
 			var scaleChange = scale / oldScale;
 
 			// TODO: Figure out this math
-			translateX = (event.offsetX / scale) - event.offsetX;
-			translateY = (event.offsetY / scale) - event.offsetY;
+			// translateX -= (event.offsetX / scale) - event.offsetX/scaleChange;
+			// translateY -= (event.offsetY / scale) - event.offsetY/scaleChange;
+			// translateX -= (event.offsetX / 1);
+			// translateY -= (event.offsetY / 1);
 
 			$canvas.setLayer('scale', {
-				scale: scale
+				scale: scale,
+				x: event.offsetX,
+				y: event.offsetY
 			});
 			$canvas.setLayer('translate', {
 				translateX: translateX,
