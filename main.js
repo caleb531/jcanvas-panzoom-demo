@@ -25,9 +25,9 @@ function nearest(value, roundAmount) {
 function updateCoords(event) {
 	$cursorCoords.text([
 		'(~',
-		nearest(event.offsetX, nearestAmount),
+		nearest(event.offsetX, 1),
 		', ~',
-		nearest(event.offsetY, nearestAmount),
+		nearest(event.offsetY, 1),
 		')'
 	].join(''));
 }
@@ -132,17 +132,17 @@ function addEventBindings() {
 	$canvas.on('mouseup', function (event) {
 		isMousedown = false;
 		if (!isPanning) {
-			scale += 1;
-			var scaleChange = scale / (scale - 1);
-			// translateX -= event.offsetX / scaleChange;
-			// translateY -= event.offsetY / scaleChange;
+			scale *= 2;
+			var scaleChange = scale - (scale - 1);
+			translateX -= event.offsetX / scale;
+			translateY -= event.offsetY / scale;
 			$canvas.setLayer('scale', {
 				scale: scale
 			});
-			// $canvas.setLayer('translate', {
-			// 	translateX: translateX,
-			// 	translateY: translateY
-			// });
+			$canvas.setLayer('translate', {
+				translateX: translateX,
+				translateY: translateY
+			});
 			$canvas.drawLayers();
 			updateCoords(event);
 		}
