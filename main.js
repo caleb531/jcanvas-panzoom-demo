@@ -132,10 +132,14 @@ function addEventBindings() {
 	$canvas.on('mouseup', function (event) {
 		isMousedown = false;
 		if (!isPanning) {
-			scale *= 2;
-			var scaleChange = scale - (scale - 1);
-			translateX -= event.offsetX / scale;
-			translateY -= event.offsetY / scale;
+			var oldScale = scale;
+			scale += 1;
+			var scaleChange = scale / oldScale;
+
+			// TODO: Figure out this math
+			translateX = (event.offsetX / scale) - event.offsetX;
+			translateY = (event.offsetY / scale) - event.offsetY;
+
 			$canvas.setLayer('scale', {
 				scale: scale
 			});
