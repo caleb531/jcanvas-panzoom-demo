@@ -23,8 +23,10 @@ The first three cases are functioning properly, however the last case is failing
 to keep the clicked point on the cursor when zooming (at least after zooming
 more than once).
 
-**Your task is to fix this fourth case without breaking the other
-three cases.**
+## Your Mission
+
+**Your task is to fix this fourth case without breaking the other three cases.**
+See the *TODO* towards the end of `main.js` for details; I believe the correct solution will involve properly modifying `translateX` and `translateY`.
 
 ## Setup
 
