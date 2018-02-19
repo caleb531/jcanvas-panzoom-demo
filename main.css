@@ -2,6 +2,7 @@ body {
 	background-color: #148;
 	font-family: 'Open Sans', sans-serif;
 	text-align: center;
+	user-select: none;
 	color: #fff;
 }
 canvas {
