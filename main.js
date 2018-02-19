@@ -23,11 +23,14 @@ function applyTransformations() {
 	// Create a layer for translatening the canvas
 	$canvas.scaleCanvas({
 		layer: true,
-		name: 'scale'
+		name: 'scale',
+		scale: scale
 	});
 	$canvas.translateCanvas({
 		layer: true,
-		name: 'translate'
+		name: 'translate',
+		translateX: translateX,
+		translateY: translateY
 	});
 
 }
@@ -53,20 +56,23 @@ function drawShapes() {
 
 	$canvas.drawRect({
 		layer: true,
+		opacity: 0.5,
 		fillStyle: '#36c',
-		x: 0, y: 100,
+		x: 0, y: 200,
 		width: shapeSize, height: shapeSize
 	});
 	$canvas.drawRect({
 		layer: true,
+		opacity: 0.5,
 		fillStyle: '#6c3',
-		x: 200, y: 100,
+		x: 200, y: 200,
 		width: shapeSize, height: shapeSize
 	});
 	$canvas.drawRect({
 		layer: true,
+		opacity: 0.5,
 		fillStyle: '#c33',
-		x: 400, y: 100,
+		x: 400, y: 200,
 		width: shapeSize, height: shapeSize
 	});
 
@@ -96,16 +102,16 @@ function addEventBindings() {
 
 	// Add translatening behavior to canvas
 	$canvas.on('mousedown', function (event) {
-		startX = event.offsetX - (translateX * scale);
-		startY = event.offsetY - (translateY * scale);
+		startX = (event.offsetX / scale) - translateX;
+		startY = (event.offsetY / scale) - translateY;
 		isPanning = false;
 		isMousedown = true;
 	});
 	$canvas.on('mousemove', function (event) {
 		if (isMousedown) {
 			isPanning = true;
-			translateX = (event.offsetX - startX) / scale;
-			translateY = (event.offsetY - startY) / scale;
+			translateX = (event.offsetX / scale) - startX;
+			translateY = (event.offsetY / scale) - startY;
 			$canvas.setLayer('translate', {
 				translateX: translateX,
 				translateY: translateY
@@ -113,23 +119,20 @@ function addEventBindings() {
 			$canvas.drawLayers();
 		}
 	});
+
+	var translateIndex = 0;
 	$canvas.on('mouseup', function (event) {
 		isMousedown = false;
 		if (!isPanning) {
 			var oldScale = scale;
-			scale += 1;
-			var scaleChange = scale / oldScale;
+			var newScale = oldScale + 1;
+			scale = newScale;
 
-			// TODO: Figure out this math
-			// translateX -= (event.offsetX / scale) - event.offsetX/scaleChange;
-			// translateY -= (event.offsetY / scale) - event.offsetY/scaleChange;
-			// translateX -= (event.offsetX / 1);
-			// translateY -= (event.offsetY / 1);
+			translateX += (event.offsetX / scale) - (event.offsetX / oldScale);
+			translateY += (event.offsetY / scale) - (event.offsetY / oldScale);
 
 			$canvas.setLayer('scale', {
-				scale: scale,
-				x: event.offsetX,
-				y: event.offsetY
+				scale: scale
 			});
 			$canvas.setLayer('translate', {
 				translateX: translateX,
