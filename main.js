@@ -128,8 +128,8 @@ function addEventBindings() {
 			var newScale = oldScale + 1;
 			scale = newScale;
 
-			translateX += (event.offsetX / scale) - (event.offsetX / oldScale);
-			translateY += (event.offsetY / scale) - (event.offsetY / oldScale);
+			translateX += (event.offsetX / newScale) - (event.offsetX / oldScale);
+			translateY += (event.offsetY / newScale) - (event.offsetY / oldScale);
 
 			$canvas.setLayer('scale', {
 				scale: scale
