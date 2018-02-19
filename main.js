@@ -39,14 +39,16 @@ function drawGrid() {
 
 	for (var x = 0; x < (canvasWidth / nearestAmount); x += 1) {
 		for (var y = 0; y < (canvasHeight / nearestAmount); y += 1) {
-			$canvas.drawRect({
-				layer: true,
-				fillStyle: (x + y) % 2 === 0 ? '#eee' : '#fff',
-				x: x * nearestAmount,
-				y: y * nearestAmount,
-				width: nearestAmount, height: nearestAmount,
-				fromCenter: false
-			});
+			if ((x + y) % 2 === 0) {
+				$canvas.drawRect({
+					layer: true,
+					fillStyle: '#eee',
+					x: x * nearestAmount,
+					y: y * nearestAmount,
+					width: nearestAmount, height: nearestAmount,
+					fromCenter: false
+				});
+			}
 		}
 	}
 
