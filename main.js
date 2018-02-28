@@ -10,6 +10,7 @@ var canvasHeight = $canvas.height();
 var translateX = 0;
 var translateY = 0;
 var scale = 1;
+var zoomScale = 0.1; 
 
 var startX;
 var startY;
@@ -123,25 +124,41 @@ function addEventBindings() {
 	});
 
 	var translateIndex = 0;
-	$canvas.on('mouseup', function (event) {
-		isMousedown = false;
-		if (!isPanning) {
-			var oldScale = scale;
-			var newScale = oldScale + 1;
-			scale = newScale;
+//	$canvas.on('mouseup', function (event) {
+//		isMousedown = false;
+//		if (!isPanning) {
+	$canvas.on('wheel', function (eParam) {
+            	var e = eParam.originalEvent;
+            	var deltaY = 0;
+            	e.preventDefault();
+            	if (e.deltaY) { // FireFox 17+ (IE9+, Chrome 31+?)
+                	deltaY = e.deltaY;
+            	} else if (e.wheelDelta) {
+                	deltaY = -e.wheelDelta;
+            	}
+		var oldScale = scale;
+		var newScale;
 
-			translateX += (event.offsetX / newScale) - (event.offsetX / oldScale);
-			translateY += (event.offsetY / newScale) - (event.offsetY / oldScale);
+	    	if (deltaY < 0) {
+			newScale = oldScale + zoomScale;
+	    	} else {
+			newScale = oldScale - zoomScale;
+	    	}
 
-			$canvas.setLayer('scale', {
-				scale: scale
-			});
-			$canvas.setLayer('translate', {
-				translateX: translateX,
-				translateY: translateY
-			});
-			$canvas.drawLayers();
-		}
+		scale = newScale;
+
+		translateX += (event.offsetX / newScale) - (event.offsetX / oldScale);
+		translateY += (event.offsetY / newScale) - (event.offsetY / oldScale);
+
+		$canvas.setLayer('scale', {
+			scale: scale
+		});
+		$canvas.setLayer('translate', {
+			translateX: translateX,
+			translateY: translateY
+		});
+		$canvas.drawLayers();
+//		}
 	});
 
 }
