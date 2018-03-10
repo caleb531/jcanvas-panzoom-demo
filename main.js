@@ -100,6 +100,23 @@ function draw() {
 
 }
 
+function setScale(event, newScale, oldScale) {
+
+	scale = newScale;
+	translateX += (event.offsetX / newScale) - (event.offsetX / oldScale);
+	translateY += (event.offsetY / newScale) - (event.offsetY / oldScale);
+
+	$canvas.setLayer('scale', {
+		scale: scale
+	});
+	$canvas.setLayer('translate', {
+		translateX: translateX,
+		translateY: translateY
+	});
+	$canvas.drawLayers();
+
+}
+
 function addEventBindings() {
 
 	// Add translatening behavior to canvas
@@ -128,20 +145,27 @@ function addEventBindings() {
 		if (!isPanning) {
 			var oldScale = scale;
 			var newScale = oldScale + 1;
-			scale = newScale;
-
-			translateX += (event.offsetX / newScale) - (event.offsetX / oldScale);
-			translateY += (event.offsetY / newScale) - (event.offsetY / oldScale);
-
-			$canvas.setLayer('scale', {
-				scale: scale
-			});
-			$canvas.setLayer('translate', {
-				translateX: translateX,
-				translateY: translateY
-			});
-			$canvas.drawLayers();
+			setScale(event, newScale, oldScale);
 		}
+	});
+
+	$canvas.on('wheel', function (event) {
+		var originalEvent = event.originalEvent;
+		event.preventDefault();
+		var deltaY = 0;
+		if (originalEvent.deltaY) { // FireFox 17+ (IE9+, Chrome 31+?)
+			deltaY = originalEvent.deltaY;
+		} else if (originalEvent.wheelDelta) {
+			deltaY = -originalEvent.wheelDelta;
+		}
+		var oldScale = scale;
+		var newScale;
+		if (deltaY < 0) {
+			newScale = oldScale * (1 + 0.05);
+		} else {
+			newScale = oldScale * (1 - 0.05);
+		}
+		setScale(event, newScale, oldScale);
 	});
 
 }
