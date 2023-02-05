@@ -35,23 +35,11 @@ function applyTransformations() {
 
 }
 
-function drawGrid() {
-
-	for (var x = 0; x < (canvasWidth / nearestAmount); x += 1) {
-		for (var y = 0; y < (canvasHeight / nearestAmount); y += 1) {
-			if ((x + y) % 2 === 0) {
-				$canvas.drawRect({
-					layer: true,
-					fillStyle: '#eee',
-					x: x * nearestAmount,
-					y: y * nearestAmount,
-					width: nearestAmount, height: nearestAmount,
-					fromCenter: false
-				});
-			}
-		}
-	}
-
+function updateGridBackground() {
+	$canvas.css({
+		backgroundSize: (scale * nearestAmount * 2) + 'px ' + (scale * nearestAmount * 2) + 'px',
+		backgroundPosition: (scale * translateX) + 'px ' + (scale * translateY) + 'px'
+	});
 }
 
 function drawShapes() {
@@ -94,10 +82,9 @@ function restoreTransformations() {
 function draw() {
 
 	applyTransformations();
-	drawGrid();
 	drawShapes();
 	restoreTransformations();
-
+	updateGridBackground();
 }
 
 function setScale(event, newScale, oldScale) {
@@ -114,6 +101,7 @@ function setScale(event, newScale, oldScale) {
 		translateY: translateY
 	});
 	$canvas.drawLayers();
+	updateGridBackground();
 
 }
 
@@ -136,6 +124,7 @@ function addEventBindings() {
 				translateY: translateY
 			});
 			$canvas.drawLayers();
+			updateGridBackground();
 		}
 	});
 

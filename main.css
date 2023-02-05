@@ -14,6 +14,7 @@ p {
 }
 canvas {
 	background-color: #fff;
+	background-image: url('grid.svg');
 	border: solid 1px #000;
 	color: #fff;
 }
