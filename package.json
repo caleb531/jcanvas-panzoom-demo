@@ -1,0 +1,23 @@
+{
+  "name": "jcanvas-panzoom-demo",
+  "description": "An implementation of panning/zooming functionality in jCanvas",
+  "keywords": [
+    "jcanvas",
+    "jquery",
+    "panning",
+    "zooming",
+    "scaling",
+    "translating"
+  ],
+  "author": "Caleb Evans",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/caleb531/jcanvas-panzoom-demo.git"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@eslint/js": "^9.9.0",
+    "eslint": "^9.9.0",
+    "globals": "^15.9.0"
+  }
+}
